@@ -17,9 +17,18 @@ def relu_derivative(X_passed):
     return X_
 
 def softmax(X):
-    const = np.max(X)
-    exp_X = np.exp(X - const)
-    return exp_X / np.sum(exp_X)
+    def _softmax(X):
+        const = np.max(X)
+        exp_X = np.exp(X - const)
+        return exp_X / np.sum(exp_X)
+    logits = []
+    for x in X:
+        logit = _softmax(x)
+        logits.append(logit)
+    return np.array(logits)
+
+
+
 
     
 

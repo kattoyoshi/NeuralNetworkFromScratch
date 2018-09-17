@@ -32,6 +32,15 @@ class TestFunctions(unittest.TestCase):
         print(actual)
         self.assertTrue((expected==actual).all())
     
+    def test_softmax_1(self):
+        test_data = np.array([[0.3, 2.9, 4.0],
+                              [-0.5, -0.001, 0.001]])
+        expected = (2,3)
+        logits = functions.softmax(test_data)
+        print(logits)
+        actual = logits.shape
+        self.assertTrue(expected==actual)
+
     #def test_cross_entropy_loss(self):
 
 
