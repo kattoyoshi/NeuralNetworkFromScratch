@@ -1,10 +1,4 @@
 import numpy as np
-  
-# Loss
-def cross_entropy_loss(y, y_hat):
-    """cross entropy loss"""
-    delta = 1e-7
-    return -np.sum(y_hat * np.log(y + delta))
 
 # Activation
 def relu(X):

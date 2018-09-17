@@ -39,19 +39,18 @@ class MLP_MNIST():
 
     def train(self, X, y):
         """Update trainable parameters using backpropagation"""
-        h1_input, h1_output, h2_input, h2_output, final_output = self.__forwardpass_train(X)
-        train_loss = functions.cross_entropy_loss(y, final_output)
-        dW1, db1, dW2, db2, dW3, db3 = self.__backpropagation(X, y, h1_input, h1_output, h2_input, h2_output, final_output)
-        self.__update_weights(dW1, db1, dW2, db2, dW3, db3)
+        h1_input, h1_output, h2_input, h2_output, final_output = self.forwardpass_train(X)
+        # calculate average loss per one data
+        train_loss = self.cross_entropy_loss(y, final_output)
+        dW1, db1, dW2, db2, dW3, db3 = self.backpropagation(X, y, h1_input, h1_output, h2_input, h2_output, final_output)
+        self.update_weights(dW1, db1, dW2, db2, dW3, db3)
         return train_loss
     
-    def __forwardpass_train(self, X):
+    def forwardpass_train(self, X):
         """Make forward pass and return the computation results for backpropagation"""
-        print(X)
         # hidden_1
         h1_input = np.dot(X, self.W1) + self.b1
         h1_output = functions.relu(h1_input)
-        print(h1_output)
         # hidden_2
         h2_input = np.dot(h1_output, self.W2) + self.b2
         h2_output = functions.relu(h2_input)
@@ -60,12 +59,11 @@ class MLP_MNIST():
         final_output = functions.softmax(o_input)
         return h1_input, h1_output, h2_input, h2_output, final_output
     
-    def __backpropagation(self, X, y, h1_input, h1_output, h2_input, h2_output, final_output):
+    def backpropagation(self, X, y, h1_input, h1_output, h2_input, h2_output, final_output):
         """Backpropagate the loss and calculate the partial derivative of the trainable parameters"""
-        batch_size = y.shape[0]s
-
-        output_error_term = self.softmax_cross_entropy_loss(y, final_output) / batch_size
-        db3 = np.sum(output_error_term, axis = 0) 
+        # back propagate loss per one data
+        output_error_term = self.softmax_cross_entropy_loss(y, final_output)
+        db3 = np.sum(output_error_term, axis=0) 
         dW3 = np.dot(h2_output.T, output_error_term)
 
         h2_error_term = np.dot(output_error_term, self.W3.T) * functions.relu_derivative(h2_input) 
@@ -78,7 +76,7 @@ class MLP_MNIST():
         
         return dW1, db1, dW2, db2, dW3, db3
     
-    def __update_weights(self, dW1, db1, dW2, db2, dW3, db3):
+    def update_weights(self, dW1, db1, dW2, db2, dW3, db3):
         self.W1 += -self.learning_rate * dW1
         self.b1 += -self.learning_rate * db1
         self.W2 += -self.learning_rate * dW2
@@ -100,22 +98,27 @@ class MLP_MNIST():
         y_hat = functions.softmax(o_input)
         return y_hat
     
-    def predict_label(self, X):
-        prob = self.predict(X)
-        return np.argmax(prob)
-    
     ###### Evaluation ######
 
     def evaluate(self, X, y):
-        """Return the loss of the network"""
+        """Return the loss of the network per one data"""
         y_pred = self.predict(X)
-        return functions.cross_entropy_loss(y, y_pred)
+        return self.cross_entropy_loss(y, y_pred)
 
-    ###### Loss of the Output Error term ######
-
+    ###### Loss ######
+    def cross_entropy_loss(self, y, y_hat):
+        """cross entropy loss per one data"""
+        if y.ndim == 1:
+            batch_size = 1
+        else:
+            batch_size = y.shape[0]
+        delta = 1e-7
+        return -np.sum(y * np.log(y_hat + delta)) / batch_size
+    
     def softmax_cross_entropy_loss(self, y, y_hat):
-        """Output error term, in case Activation=softmax and Loss=cross entropy"""
-        return -(y- y_hat)
+        """Output error term per one data, in case Activation=softmax and Loss=cross entropy"""
+        batch_size = y.shape[0]
+        return -(y - y_hat) / batch_size
 
     ###### Save/Load ######
 
