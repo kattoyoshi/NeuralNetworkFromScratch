@@ -48,6 +48,10 @@ class mnist_dataset():
         y_train = self.one_hot_encoding(y_train)
         y_test = self.one_hot_encoding(y_test)
         
+        # normalize
+        X_train = X_train / 255.
+        X_test = X_test / 255.
+
         return X_train, X_test, y_train, y_test
 
     def load_features(self, file_path):
