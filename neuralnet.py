@@ -130,9 +130,9 @@ class MLP_MNIST():
         """load parameters from .npz file"""
         weights = np.load(dir_path + os.path.sep + "weights.npz")
         biases = np.load(dir_path + os.path.sep + "biases.npz")
-        self.W1 = weights["w1"]
-        self.W2 = weights["w2"]
-        self.W3 = weights["w3"]
+        self.W1 = weights["W1"]
+        self.W2 = weights["W2"]
+        self.W3 = weights["W3"]
         self.b1 = biases["b1"]
         self.b2 = biases["b2"]
         self.b3 = biases["b3"]
