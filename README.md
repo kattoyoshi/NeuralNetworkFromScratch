@@ -30,4 +30,4 @@ __Note of the program:__
 - Load best model and evaluate model using test dataset.
 
 ## 5. Details of the computation theories
-[Check here !](Explanation.html)
+[Check here !](explanation.ipynb)
