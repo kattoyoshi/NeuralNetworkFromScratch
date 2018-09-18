@@ -8,7 +8,12 @@ In this repository, I will show you the example code of the scratch implementati
 - scikit-learn 0.19.1
 
 ## 2. Preparation
-- Download [MNIST dataset]((http://yann.lecun.com/exdb/mnist/)) (4 files) and store those files into the "data" directory.
+- Download [MNIST dataset](http://yann.lecun.com/exdb/mnist/) (4 files) and store those files into the "data" directory.
+- Required file names are following:
+  - train-images-idx3-ubyte.gz
+  - train-labels-idx1-ubyte.gz
+  - t10k-images-idx3-ubyte.gz
+  - t10k-labels-idx1-ubyte.gz
 
 ## 3. What I have created
 What I have created is the network for the digit recognition (MNIST Dataset). The network structure is shown in the following figure.
