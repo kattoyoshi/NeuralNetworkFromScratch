@@ -31,7 +31,7 @@ __Note of the program:__
 - Split original training dataset into train & validation data.  
   - training : validation = 0.8 : 0.2
 - Keep training until the validation loss reaches to plateau.
-  - Save weights and biases as ".npy" format only in case the validation loss improved.
+  - Save weights and biases as ".npz" format only in case the validation loss improved.
 - Load best model and evaluate model using test dataset.
 
 ## 5. Details of the computation theories
